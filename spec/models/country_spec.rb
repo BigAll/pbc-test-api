@@ -2,6 +2,17 @@ require 'rails_helper'
 
 RSpec.describe Country, type: :model do
   describe "create country" do
+    describe "with non unique country code" do
+      it "fails to create country" do
+        country = Country.new({country_code: "My Country"})
+        country.validate
+        expect(country.valid?).to be true
+        country.save
+        country = Country.new({country_code: "My Country"})
+        expect(country.valid?).to be false
+      end
+    end
+
     describe "with non root target group" do
       it "fails to create country" do
         target_group_leaf = TargetGroup.find_or_create_by_path([

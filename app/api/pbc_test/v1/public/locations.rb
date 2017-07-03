@@ -9,7 +9,9 @@ module PbcTest
               requires :country_code, type: String, desc: 'code of the country to get locations'
             end
             get '/:country_code' do
-              locations = Country.find_by_country_code(params[:country_code]).locations
+              country = Country.find_by_country_code(params[:country_code])
+              locations = []
+              locations = country.locations if country
               present locations
             end
           end

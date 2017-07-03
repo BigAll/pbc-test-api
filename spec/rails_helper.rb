@@ -28,6 +28,7 @@ require 'factory_girl_rails'
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+  config.include RSpec::Rails::RequestExampleGroup, type: :request, file_path: /spec\/app\/api/
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
