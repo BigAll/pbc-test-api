@@ -1,30 +1,32 @@
 require 'rails_helper'
 
 describe 'PbcTest::V1::Private::TargetGroups' do
+  let(:letters_panel_provider) { FactoryGirl.create :letters_panel_provider}
+  let(:arrays_panel_provider) { FactoryGirl.create :arrays_panel_provider}
+
   let(:location1) { FactoryGirl.create :location}
   let(:location2) { FactoryGirl.create :location}
   let(:location3) { FactoryGirl.create :location}
 
   let(:target_group_tree1) { TargetGroup.find_or_create_by_path([
-      {name: "Root_TG1"},
-      {name: "TG1_level_1"},
-      {name: "TG1_level_2"},
-      {name: "TG1_level_3"},
-      {name: "TG1_level_4"}
+      {name: "Root_TG1", panel_provider: letters_panel_provider},
+      {name: "TG1_level_1", panel_provider: letters_panel_provider},
+      {name: "TG1_level_2", panel_provider: letters_panel_provider},
+      {name: "TG1_level_3", panel_provider: letters_panel_provider},
+      {name: "TG1_level_4", panel_provider: letters_panel_provider}
     ]
   )
   }
   let(:target_group_tree2) { TargetGroup.find_or_create_by_path([
-      {name: "Root_TG2"},
-      {name: "TG2_level_1"},
-      {name: "TG2_level_2"},
-      {name: "TG2_level_3"},
-      {name: "TG2_level_4"}
+      {name: "Root_TG2", panel_provider: arrays_panel_provider},
+      {name: "TG2_level_1", panel_provider: arrays_panel_provider},
+      {name: "TG2_level_2", panel_provider: arrays_panel_provider},
+      {name: "TG2_level_3", panel_provider: arrays_panel_provider},
+      {name: "TG2_level_4", panel_provider: arrays_panel_provider}
     ]
   )
   }
-  let(:panel_provider) { FactoryGirl.create :panel_provider, code: "letters"}
-  let(:country) { FactoryGirl.create :country, target_groups: [target_group_tree1.root, target_group_tree2.root], panel_provider: panel_provider}
+  let(:country) { FactoryGirl.create :country, target_groups: [target_group_tree1.root, target_group_tree2.root], panel_provider: letters_panel_provider}
   let!(:location_group) { FactoryGirl.create :location_group, locations: [location1, location2, location3], country: country}
 
   context 'unauthorized user' do
@@ -56,7 +58,7 @@ describe 'PbcTest::V1::Private::TargetGroups' do
         get "/api/v1/private/target_groups/MyCountry", {},
           { HTTP_AUTHORIZATION: ActionController::HttpAuthentication::Basic.encode_credentials("admin","secret-password") }
         expect(response.status).to eq(200)
-        expect(JSON.parse(response.body).size).to eq 2
+        expect(JSON.parse(response.body).size).to eq 1 #because only one panel provider is similar for country and target group
       end
     end
 

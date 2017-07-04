@@ -10,10 +10,8 @@ module PbcTest
               requires :country_code, type: String, desc: 'code of the country to get target groups'
             end
             get '/:country_code' do
-              country = Country.find_by_country_code(params[:country_code])
-              target_groups = []
-              target_groups = country.target_groups if country.present?
-              present target_groups
+              service = ::Public::TargetGroupsService.new(params)
+              present service.get_target_groups
             end
           end
         end

@@ -27,6 +27,7 @@ module TestApi
     ## Newly Added code to set up the api code
     config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
     config.autoload_paths += Dir[Rails.root.join('app', 'api', '**')]
+    config.autoload_paths += Dir[Rails.root.join('app', 'models', 'panel_providers')]
 
   end
 end

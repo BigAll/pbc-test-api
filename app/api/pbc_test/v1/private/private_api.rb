@@ -1,7 +1,7 @@
 module PbcTest
   module V1
     module Private
-      class PrivateAuth < Grape::API
+      class PrivateApi < Grape::API
 
         http_basic do |email, password|
           email && email == "admin" && password && password == "secret-password"

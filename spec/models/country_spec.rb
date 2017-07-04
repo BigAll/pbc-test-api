@@ -23,7 +23,7 @@ RSpec.describe Country, type: :model do
             {name: "tg_level_4"}
           ]
         )
-        panel_provider = FactoryGirl.create :panel_provider
+        panel_provider = FactoryGirl.create :letters_panel_provider
         country = Country.new({country_code: "My Country", target_groups: [target_group_leaf], panel_provider: panel_provider})
         country.validate
         expect(country.valid?).to be false
@@ -41,7 +41,7 @@ RSpec.describe Country, type: :model do
             {name: "tg_level_4"}
           ]
         )
-        panel_provider = FactoryGirl.create :panel_provider
+        panel_provider = FactoryGirl.create :letters_panel_provider
         country = Country.new({country_code: "My Country", target_groups: [target_group_leaf.root], panel_provider: panel_provider})
         country.validate
         expect(country.valid?).to be true

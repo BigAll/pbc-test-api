@@ -7,9 +7,9 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # seed panel providers
-pp1 = PanelProvider.create({code: 'letters'})
-pp2 = PanelProvider.create({code: 'arrays'})
-pp3 = PanelProvider.create({code: 'nodes'})
+pp1 = PanelProvider.create({code: 'LettersPanelProvider'})
+pp2 = PanelProvider.create({code: 'ArraysPanelProvider'})
+pp3 = PanelProvider.create({code: 'NodesPanelProvider'})
 
 # seed countries
 country1 = Country.create({country_code: "USA", panel_provider: pp1})
@@ -61,10 +61,10 @@ country3.target_groups << tg_tree3.root
 country3.save!
 
 # seed location groups
-lg1 = LocationGroup.create({name: "chineese locations", country: country3, panel_provider: pp1})
+lg1 = LocationGroup.create({name: "chineese locations", country: country3, panel_provider: pp3})
 lg2 = LocationGroup.create({name: "russian locations", country: country2, panel_provider: pp2})
-lg3 = LocationGroup.create({name: "usa cities", country: country1, panel_provider: pp3})
-lg4 = LocationGroup.create({name: "usa states", country: country1, panel_provider: pp2})
+lg3 = LocationGroup.create({name: "usa cities", country: country1, panel_provider: pp1})
+lg4 = LocationGroup.create({name: "usa states", country: country1, panel_provider: pp3})
 
 # seed locations
 # Locations for china

@@ -1,7 +1,7 @@
 module PbcTest
   module V1
     module Private
-      class Locations < PrivateAuth
+      class Locations < PrivateApi
 
         namespace 'private' do
           resource :locations do
@@ -9,10 +9,8 @@ module PbcTest
               requires :country_code, type: String, desc: 'code of the country to get locations'
             end
             get '/:country_code' do
-              country = Country.find_by_country_code(params[:country_code])
-              locations = []
-              locations = country.locations if country
-              present locations
+              service = ::Public::LocationsService.new(params)
+              present service.get_locations
             end
           end
         end

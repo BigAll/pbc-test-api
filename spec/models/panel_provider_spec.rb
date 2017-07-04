@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe PanelProvider, type: :model do
-  let(:letters_panel_provider) { FactoryGirl.create :panel_provider, code: "letters"}
-  let(:arrays_panel_provider) { FactoryGirl.create :panel_provider, code: "arrays"}
-  let(:nodes_panel_provider) { FactoryGirl.create :panel_provider, code: "nodes"}
+  let(:letters_panel_provider) { FactoryGirl.create :letters_panel_provider}
+  let(:arrays_panel_provider) { FactoryGirl.create :arrays_panel_provider}
+  let(:nodes_panel_provider) { FactoryGirl.create :nodes_panel_provider}
   describe "price" do
     it "should do price for letters" do
       stub_request(:get, "http://time.com").to_return(body: "<html><body><p>paragraph 1</p><p>Paragraph 2</p></body></html>", status: 200)

@@ -4,7 +4,7 @@ require 'validations/valid_locations'
 module PbcTest
   module V1
     module Private
-      class TargetGroups < PrivateAuth
+      class TargetGroups < PrivateApi
 
         namespace 'private' do
           resource :target_groups do
@@ -13,10 +13,8 @@ module PbcTest
               requires :country_code, type: String, desc: 'code of the country to get target groups'
             end
             get '/:country_code' do
-              country = Country.find_by_country_code(params[:country_code])
-              target_groups = []
-              target_groups = country.target_groups if country.present?
-              present target_groups
+              service = ::Public::TargetGroupsService.new(params)
+              present service.get_target_groups
             end
           end
 
@@ -30,10 +28,10 @@ module PbcTest
             end
           end
           post '/evaluate_target' do
-            country = Country.find_by_country_code(params[:country_code])
-            price = country.panel_provider.price if country
-            present price
+            service = ::Private::CountryService.new(params)
+            present service.calculate_price
           end
+
         end
       end
     end
